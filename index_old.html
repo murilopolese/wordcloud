@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Word Cloud</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="video">
+      <input type="text" name="video" value="" placeholder="youtube video url">
+      <button>Load video</button>
+      <div class="iframe"></div>
+    </div>
+    <div id="cloud">
+      <button id="start">start cloud</button>
+      <div class="stop-words">
+        <input type="text" name="word" value="" placeholder="type your stop word here">
+        <button>Add</button>
+        <ul>
+          <li>Stop <button>remove</button></li>
+          <li>Words <button>remove</button></li>
+          <li>List <button>remove</button></li>
+        </ul>
+      </div>
+      <div class="time-window">
+        <label>Time window:</label>
+        <input type="range" />
+      </div>
+      <div class="words">
+        <span style="font-size: 1em;">word<span>
+        <span style="font-size: 2em;">cloud<span>
+        <span style="font-size: 1.5em;">lorem<span>
+          <span style="font-size: 2.5em;">amet<span>
+        <span style="font-size: 0.5em;">ipsum<span>
+        <span style="font-size: 1em;">sit<span>
+        <span style="font-size: 3em;">dolor<span>
+      </div>
+      <div class="text"></div>
+    </div>
+    <script src="app.js" charset="utf-8"></script>
+  </body>
+</html>
