@@ -2,21 +2,22 @@ const html = require('choo/html')
 
 const Video = (state, emit) => {
   return html`
-    <div>
-      ${VideoControls(state, emit)}
-      ${VideoPlayer(state, emit)}
-    </div>
+    ${VideoControls(state, emit)}
+    ${VideoPlayer(state, emit)}
   `
 }
 
 const VideoControls = (state, emit) => {
-  const onChange = (e) => emit('loadVideo', e.target.value)
+  const onsubmit = (e) => {
+    e.preventDefault()
+    return false
+  }
   return html`
-    <div class="video-controls">
-      <input type="text" value=${state.videoUrl||''} onkeyup=${onChange} />
-      <button>Load video</button>
+    <form class="video-controls" onsubmit=${onsubmit}>
+      <input type="text" name="videoUrl" />
+      <button onclick=${() => emit('loadVideo')}>Load video</button>
       ${state.videoError}
-    </div>
+    </form>
   `
 }
 const VideoPlayer = (state, emit) => {

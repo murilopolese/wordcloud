@@ -1,35 +1,34 @@
+let stopWords = require('./stop_words.json')
+
 function processWords(state) {
   let words = state.text + state.interim_transcript
   words = words.replaceAll('.', '')
   words = words.replaceAll(',', '')
   words = words.replaceAll(',', '')
   words = words.split(' ')
+  // if (words.length > 50) {
+  //   words = words.slice(-50)
+  // }
   return words.reduce(function(acc, word) {
-    // if (state.stopWords.indexOf(word) === -1) {
-      if (acc[word]) {
-        acc[word] += 1
-      } else {
-        acc[word] = 1
-      }
-    // }
+    if (acc[word]) {
+      acc[word] += 1
+    } else {
+      acc[word] = 1
+    }
     return acc
   }, {})
 }
 
-
 module.exports = (state, emitter) => {
-  setTimeout(() => {
-    emitter.emit('loadVideo', state.videoUrl)
-  }, 500)
-  state.videoUrl = 'https://www.youtube.com/watch?v=ibrwte1QqUE&feature=emb_title&ab_channel=JaySilver'
+  state.videoUrl = null
   state.videoId = null
   state.videoError = null
 
-  state.stopWords = ["a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along", "already", "also","although","always","am","among", "amongst", "amoungst", "amount",  "an", "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", "are", "around", "as",  "at", "back","be","became", "because","become","becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "one", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"]
+  state.stopWords = stopWords
   state.wordInput = ''
   state.minCount = 2
   state.words = {}
-  state.text = ''
+  state.text = ``
   state.interim_transcript = ''
 
   state.recognitionError = null
@@ -80,8 +79,15 @@ module.exports = (state, emitter) => {
     state.recognitionError = "This website only works on Google Chrome :("
   }
 
-  emitter.on('loadVideo', (value) => {
-    state.videoUrl = value
+  // Accordion
+  state.videoOpen = true
+  state.filtersOpen = false
+  state.speechOpen = false
+  state.cloudOpen = false
+
+  emitter.on('loadVideo', () => {
+    let input = document.querySelector('.video-controls input[name="videoUrl"]')
+    let value = input ? input.value : ''
     try {
       let url = new URL(value)
       state.videoId = url.searchParams.get('v')
@@ -97,11 +103,11 @@ module.exports = (state, emitter) => {
     emitter.emit('render')
   })
   emitter.on('addStopWord', () => {
-    if (state.wordInput !== '') {
-      state.stopWords.unshift(state.wordInput)
-      state.wordInput = ''
-      emitter.emit('render')
+    let input = document.querySelector('#word-form input[name="word"]')
+    if (input && input.value !== '') {
+      state.stopWords.unshift(input.value)
     }
+    emitter.emit('render')
   })
   emitter.on('changeWordInput', (word) => {
     state.wordInput = word
@@ -116,6 +122,11 @@ module.exports = (state, emitter) => {
   emitter.on('stopRecognition', () => {
     state.recognizing = true
     state.recognition.stop()
+    emitter.emit('render')
+  })
+
+  emitter.on('toggleAccordion', (prop) => {
+    state[prop] = !state[prop]
     emitter.emit('render')
   })
 

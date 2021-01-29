@@ -12,6 +12,7 @@ body {
   background: #eee;
   color: #333;
   width: 80vw;
+  font-family: 'Roboto Slab', serif;
 }
 
 input[type="text"],
@@ -20,8 +21,8 @@ button {
   font-size: 1rem;
   border: none;
   outline: none;
-  margin: 0;
-  padding: 1em;
+  margin: 1rem 0;
+  padding: 1rem;
 }
 
 button {
@@ -97,5 +98,30 @@ button {
   transition: opacity 0.5s;
   &:hover {
     opacity: 1;
+  }
+}
+
+.accordion {
+  &.disabled {
+    opacity: 0.1;
+  }
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: solid 0.2rem #ddd;
+    padding: 0.5rem 1rem;
+  }
+  .content {
+    overflow: hidden;
+    height: auto;
+    &.closed {
+      height: 0vh;
+    }
+    &.open {
+      padding: 1rem 0;
+    }
   }
 }
