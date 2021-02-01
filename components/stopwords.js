@@ -17,7 +17,6 @@ const StopWords = (state, emit) => {
 
   return html`
     <div class="stop-words">
-      <h3>Stop words</h3>
       <form id="word-form" onsubmit=${onsubmit}>
         <input type="text" name="word">
         <button onclick=${() => emit('addStopWord')}>Add stop word</button>
@@ -29,10 +28,5 @@ const StopWords = (state, emit) => {
   `
 }
 
-const Filters = (state, emit) => {
-  return html`
-    ${StopWords(state, emit)}
-  `
-}
 
-module.exports = Filters;
+module.exports = StopWords;

@@ -1,13 +1,5 @@
 const html = require('choo/html')
 
-const Cloud = (state, emit) => {
-  return html`
-    <div class="cloud">
-      ${WordCloud(state, emit)}
-    </div>
-  `
-}
-
 const WordCloud = (state, emit) => {
   let filteredWords = Object.keys(state.words).reduce((acc, word) => {
     if (
@@ -25,7 +17,7 @@ const WordCloud = (state, emit) => {
 
   let words = Object.values(filteredWords).map((value, i) => {
     let word = Object.keys(filteredWords)[i]
-    let weight = (value / sum) * 20
+    let weight = (value / sum)
     return html`
       <span style="font-size: ${weight}em">
         ${word}
@@ -36,11 +28,7 @@ const WordCloud = (state, emit) => {
     <div class="word-cloud">
       ${words}
     </div>
-    <div class="text">
-      <em>Original text:</em>
-      ${state.text} ${state.interim_transcript}
-    </div>
   `
 }
 
-module.exports = Cloud
+module.exports = WordCloud

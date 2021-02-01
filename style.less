@@ -7,12 +7,12 @@
 }
 
 body {
-  margin: 0 auto;
   font-size: 1rem;
   background: #eee;
   color: #333;
-  width: 80vw;
   font-family: 'Roboto Slab', serif;
+  width: 80vw;
+  margin: 0 auto;
 }
 
 input[type="text"],
@@ -27,6 +27,48 @@ button {
 
 button {
   background: #ddd;
+}
+
+.menu {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+}
+
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+.open {
+  display: flex-block;
+}
+
+.word-cloud {
+  font-size: 30rem;
+  width: 80%;
+  z-index: 0;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    padding: 0.5rem;
+  }
 }
 
 .video-controls {
@@ -48,11 +90,6 @@ button {
   }
 }
 
-.speech-to-text {
-  button {
-    width: 100%;
-  }
-}
 
 .stop-words {
   #word-form {
@@ -86,42 +123,14 @@ button {
     }
   }
 }
-.word-cloud {
-  text-align: center;
-  span {
-    transition: all 0.5s;
-  }
-}
 
 .text {
-  opacity: 0.1;
-  transition: opacity 0.5s;
-  &:hover {
-    opacity: 1;
-  }
+  padding: 1em 0;
 }
 
-.accordion {
-  &.disabled {
-    opacity: 0.1;
-  }
-  .title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    border: solid 0.2rem #ddd;
-    padding: 0.5rem 1rem;
-  }
-  .content {
-    overflow: hidden;
-    height: auto;
-    &.closed {
-      height: 0vh;
-    }
-    &.open {
-      padding: 1rem 0;
-    }
-  }
+.speech-to-text {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0)
 }
