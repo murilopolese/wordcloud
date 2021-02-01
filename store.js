@@ -103,7 +103,7 @@ module.exports = (state, emitter) => {
   emitter.on('addStopWord', () => {
     let input = document.querySelector('#word-form input[name="word"]')
     if (input && input.value !== '') {
-      state.stopWords.unshift(input.value)
+      state.stopWords.unshift(input.value.toUpperCase())
     }
     emitter.emit('render')
   })
