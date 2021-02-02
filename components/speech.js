@@ -1,12 +1,23 @@
 const html = require('choo/html')
 
+const playIcon = require('./icons/media-play.svg')
+const stopIcon = require('./icons/media-stop.svg')
+
 const SpeechToText = (state, emit) => {
   let button = null
   if (state.recognition) {
     if (state.recognizing) {
-      button = html`<button onclick=${() => emit('stopRecognition')}>Stop listening</button>`
+      button = html`
+        <button onclick=${() => emit('stopRecognition')}>
+          <img src=${stopIcon} alt="stop" />
+        </button>
+      `
     } else {
-      button = html`<button onclick=${() => emit('startRecognition')}>Start listening</button>`
+      button = html`
+        <button onclick=${() => emit('startRecognition')}>
+        <img src=${playIcon} alt="start" />
+        </button>
+      `
     }
   }
   return html`

@@ -1,4 +1,4 @@
-let stopWords = require('./stop_words.json')
+let stopWords = require('./stop_words_nltk.json')
 
 function processWords(state) {
   let words = state.text + state.interim_transcript
@@ -26,7 +26,9 @@ function setupRecognition(state, emitter) {
     emitter.emit('render')
   }
   state.recognition.onend = function() {
-    state.recognizing = false
+    if (state.recognizing) {
+      state.recognition.start()
+    }
     emitter.emit('render')
   }
   state.recognition.onresult = function(event) {
@@ -114,7 +116,7 @@ module.exports = (state, emitter) => {
     emitter.emit('render')
   })
   emitter.on('stopRecognition', () => {
-    state.recognizing = true
+    state.recognizing = false
     state.recognition.stop()
     emitter.emit('render')
   })

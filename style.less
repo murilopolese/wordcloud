@@ -28,12 +28,27 @@ button {
 button {
   background: #ddd;
 }
+.menu-button {
+  background: none;
+  border-radius: 2em;
+  padding: 0;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  transition: all 0.2s;
+  &:hover {
+    background: #ccc;
+  }
+}
 
 .menu {
   position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 10;
+  button {
+    .menu-button();
+  }
 }
 
 .fullscreen {
@@ -57,9 +72,8 @@ button {
 
 .word-cloud {
   font-size: 30rem;
-  width: 80%;
   z-index: 0;
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -68,6 +82,7 @@ button {
 
   span {
     padding: 0.5rem;
+    transition: all 0.5s;
   }
 }
 
@@ -132,5 +147,8 @@ button {
   position: fixed;
   bottom: 1rem;
   left: 50%;
-  transform: translate(-50%, 0)
+  transform: translate(-50%, 0);
+  button {
+    .menu-button()
+  }
 }

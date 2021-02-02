@@ -7,16 +7,21 @@ const SpeechToText = require('./components/speech.js')
 const Cloud = require('./components/cloud.js')
 const Transcript = require('./components/transcript.js')
 
+const cogIcon = require('./components/icons/cog.svg')
+const cloudIcon = require('./components/icons/cloud.svg')
+
 const store = require('./store.js')
 
 const mainView = (state, emit) => {
-  let showSettings = html`<button onclick=${() => emit('showSettings')}>Settings</button>`
-  let showCloud = html`<button onclick=${() => emit('hideSettings')}>Cloud</button>`
-  let cloud = html`<div></div>`
-  let settings = html`
-    <div>
-
-    </div>
+  let showSettings = html`
+    <button onclick=${() => emit('showSettings')}>
+      <img class="icon" src=${cogIcon} alt="Settings" />
+    </button>
+  `
+  let showCloud = html`
+    <button onclick=${() => emit('hideSettings')}>
+      <img class="icon" src=${cloudIcon} alt="Cloud" />
+    </button>
   `
   return html`
     <body>
