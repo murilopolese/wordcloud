@@ -24,6 +24,7 @@ const StopWords = (state, emit) => {
       <ul>
         ${wordList}
       </ul>
+      <button onclick=${() => emit('resetStopWords')}>Reset stop words</button>
     </div>
   `
 }
